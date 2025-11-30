@@ -12,9 +12,13 @@ public class Car extends Vehicle implements Rentable {
 
     @Override
     public String getInfo() {
-        return super.getInfo() + " | Seats: " + numSeats;
+        return super.getInfo() + "Seats: " + numSeats;
     }
-
+    
+    @Override
+    public String toString() {
+    	return super.toString()+","+numSeats;
+    }
     @Override
     public void rentVehicle() {
         setStatus(VehicleStatus.Rented);

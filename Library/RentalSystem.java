@@ -1,4 +1,7 @@
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -7,6 +10,8 @@ public class RentalSystem {
     private List<Customer> customers = new ArrayList<>();
     private RentalHistory rentalHistory = new RentalHistory();
     private static RentalSystem instance;
+    private enum type{RENT,RETURN};
+    type recordType;
 
     private RentalSystem() {
     	
@@ -22,17 +27,53 @@ public class RentalSystem {
     
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+        saveVehicle(vehicle);
     }
 
     public void addCustomer(Customer customer) {
         customers.add(customer);
+        saveCustomer(customer);
     }
 
+    
+    private void saveVehicle(Vehicle vehicle) {
+    	
+    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("vehicles.txt", true))) {
+            writer.write(vehicle.toString());
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error saving vehicle: " + e.getMessage());
+        }
+    }
+    
+    private void saveCustomer(Customer customer) {
+    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("Customers.txt", true))) {
+            writer.write(customer.custToFile());
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error saving vehicle: " + e.getMessage());
+        }
+    	
+    }
+    
+    public void SaveRecord(Vehicle vehicle, Customer customer, LocalDate date, double amount,type type) {
+    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("RentalRecords.txt", true))) {
+            writer.write(vehicle.toString()+"|"+customer.custToFile()+"|"+date.toString()+"|"+amount+"|"+type);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error saving vehicle: " + e.getMessage());
+        }
+    	
+    }
+    
+    
     public void rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
         if (vehicle.getStatus() == Vehicle.VehicleStatus.Available) {
             vehicle.setStatus(Vehicle.VehicleStatus.Rented);
             rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, amount, "RENT"));
             System.out.println("Vehicle rented to " + customer.getCustomerName());
+            recordType = type.RENT;
+            SaveRecord(vehicle,customer,date,amount,recordType);
         }
         else {
             System.out.println("Vehicle is not available for renting.");
@@ -44,6 +85,8 @@ public class RentalSystem {
             vehicle.setStatus(Vehicle.VehicleStatus.Available);
             rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, extraFees, "RETURN"));
             System.out.println("Vehicle returned by " + customer.getCustomerName());
+            recordType = type.RETURN;
+            SaveRecord(vehicle,customer,date,extraFees,recordType);
         }
         else {
             System.out.println("Vehicle is not rented.");

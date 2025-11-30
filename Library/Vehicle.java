@@ -48,5 +48,9 @@ public abstract class Vehicle {
     public String getInfo() {
         return "| " + licensePlate + " | " + make + " | " + model + " | " + year + " | " + status + " |";
     }
+    @Override
+    public String toString() {
+    	return getLicensePlate()+","+getMake()+","+getModel()+","+getYear();
+    }
 
 }

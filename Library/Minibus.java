@@ -16,7 +16,10 @@ public class Minibus extends Vehicle implements Rentable {
         setStatus(VehicleStatus.Rented);
         System.out.println("Minibus " + getLicensePlate() + " has been rented.");
     }
-
+    @Override
+    public String toString() {
+    	return super.toString()+","+isAccessible;
+    }
     @Override
     public void returnVehicle() {
         setStatus(VehicleStatus.Available);

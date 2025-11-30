@@ -15,8 +15,13 @@ public class Customer {
     	return name;
     }
 
+    
     @Override
     public String toString() {
         return "Customer ID: " + customerId + " | Name: " + name;
+    }
+    
+    public String custToFile() {
+    	return this.customerId+","+this.name;
     }
 }

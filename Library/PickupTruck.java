@@ -21,6 +21,11 @@ public class PickupTruck extends Vehicle implements Rentable {
     public String getInfo() {
         return super.getInfo() + " | Cargo Size: " + cargoSize + " | Has Trailer: " + (hasTrailer ? "Yes" : "No");
     }
+    
+    @Override
+    public String toString() {
+    	return super.toString()+","+cargoSize+","+hasTrailer;
+    }
 
     @Override
     public void rentVehicle() {
