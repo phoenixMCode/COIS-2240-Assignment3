@@ -50,7 +50,7 @@ public abstract class Vehicle {
     }
     @Override
     public String toString() {
-    	return getLicensePlate()+","+getMake()+","+getModel()+","+getYear();
+    	return getClass().getSimpleName()+","+getLicensePlate()+","+getStatus()+","+getMake()+","+getModel()+","+getYear();
     }
 
 }

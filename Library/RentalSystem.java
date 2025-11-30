@@ -4,6 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 public class RentalSystem {
     private List<Vehicle> vehicles = new ArrayList<>();
@@ -14,8 +17,15 @@ public class RentalSystem {
     type recordType;
 
     private RentalSystem() {
-    	
+    	loadData();
     }
+    
+    private void loadData() {
+    	loadVehicles();
+    	loadCustomers();
+    	loadRecords();
+    }
+    
     
     public static RentalSystem getInstance() {
     	if (instance == null) {
@@ -58,7 +68,7 @@ public class RentalSystem {
     
     public void SaveRecord(Vehicle vehicle, Customer customer, LocalDate date, double amount,type type) {
     	try (BufferedWriter writer = new BufferedWriter(new FileWriter("RentalRecords.txt", true))) {
-            writer.write(vehicle.toString()+"|"+customer.custToFile()+"|"+date.toString()+"|"+amount+"|"+type);
+            writer.write(vehicle.getLicensePlate()+","+customer.getCustomerId()+","+date.toString()+","+amount+","+type);
             writer.newLine();
         } catch (IOException e) {
             System.out.println("Error saving vehicle: " + e.getMessage());
@@ -177,4 +187,114 @@ public class RentalSystem {
                 return c;
         return null;
     }
+    
+    private void loadVehicles() {
+    	try (BufferedReader reader = new BufferedReader(new FileReader("vehicles.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;   
+
+                String[] parts = line.split(",");      //this splits the line up by its commas
+
+                String type   = parts[0];              //each part corresponds to a different peice of data
+                String plate  = parts[1];
+                String loadstatus = parts[2];
+                String make   = parts[3];
+                String model  = parts[4];
+                int year      = Integer.parseInt(parts[5]);
+
+                Vehicle v = null;
+
+                switch (type) {
+                    case "Car": {
+                        int numSeats = Integer.parseInt(parts[6]);
+                        v = new Car(make, model, year, numSeats);
+                        break;
+                    }
+                    case "Minibus": {
+                        boolean isAccessible = Boolean.parseBoolean(parts[6]);
+                        v = new Minibus(make, model, year, isAccessible);
+                        break;
+                    }
+                    case "PickupTruck": {
+                        double cargoSize = Double.parseDouble(parts[6]);
+                        boolean hasTrailer = Boolean.parseBoolean(parts[7]);
+                        v = new PickupTruck(make, model, year, cargoSize, hasTrailer);
+                        break;
+                    }
+                    default:
+                        System.out.println("Unknown vehicle type in file: " + type);
+                }
+
+                if (v != null) {
+                    v.setLicensePlate(plate);
+                    v.setStatus(Vehicle.VehicleStatus.valueOf(loadstatus));
+                    vehicles.add(v);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            
+        
+        } catch (IOException e) {
+            System.out.println("Error loading vehicles: " + e.getMessage());
+        }
+    	
+    }
+    
+    private void loadCustomers() {
+    	try (BufferedReader reader = new BufferedReader(new FileReader("Customers.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;   
+
+                String[] parts = line.split(","); 
+                
+                int custId = Integer.parseInt(parts[0]);
+                String custName = parts[1];
+                
+                Customer cust = new Customer(custId,custName);
+                
+                customers.add(cust);
+            }
+            
+            
+            
+            
+            
+    	} catch (FileNotFoundException e) {
+            
+            
+        } catch (IOException e) {
+            System.out.println("Error loading customer: " + e.getMessage());
+        }
+    	
+    	
+    	
+    }
+    private void loadRecords() {
+    	try (BufferedReader reader = new BufferedReader(new FileReader("RentalRecords.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;   
+
+                String[] parts = line.split(","); 
+                
+                Vehicle v = findVehicleByPlate(parts[0]);
+                Customer cust = findCustomerById(Integer.parseInt(parts[1]));
+                LocalDate date = LocalDate.parse(parts[2]);
+                double cost = Double.parseDouble(parts[3]);
+                String recordType = parts[4];
+                
+                RentalRecord record = new RentalRecord(v,cust,date,cost,recordType);
+                
+                rentalHistory.addRecord(record);
+            }
+    	} catch (FileNotFoundException e) {
+            
+            
+        } catch (IOException e) {
+            System.out.println("Error loading customer: " + e.getMessage());
+        }
+    }
+    
 }
