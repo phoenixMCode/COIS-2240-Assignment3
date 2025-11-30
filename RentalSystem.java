@@ -6,7 +6,10 @@ public class RentalSystem {
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
     private RentalHistory rentalHistory = new RentalHistory();
+    private static RentalSystem instance; //singlton instance for Task 1 part 1: singlton design
 
+    private RentalSystem() {}
+    
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
     }
@@ -121,4 +124,13 @@ public class RentalSystem {
                 return c;
         return null;
     }
+
+    public static RentalSystem getInstance() {
+
+        if (instance == null){
+            instance = new RentalSystem();
+        }
+        return instance;
+    }
+
 }
