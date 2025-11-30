@@ -35,14 +35,29 @@ public class RentalSystem {
     }
     
     
-    public void addVehicle(Vehicle vehicle) {
+    public boolean addVehicle(Vehicle vehicle) {
+    	if (findVehicleByPlate(vehicle.getLicensePlate()) == null)
+    	{
         vehicles.add(vehicle);
         saveVehicle(vehicle);
+        return true;
+    	}
+    	else {
+    		System.out.println("License Plate is already in system.");
+    		return false;
+    	}
     }
 
-    public void addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) {
+    	if (findCustomerById(customer.getCustomerId()) == null) {
         customers.add(customer);
         saveCustomer(customer);
+        return true;
+    	}
+    	else {
+    		System.out.println("Customer Id is already occupied.");
+    		return false;
+    	}
     }
 
     

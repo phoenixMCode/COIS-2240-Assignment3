@@ -1,0 +1,104 @@
+
+1: Add Vehicle
+2: Add Customer
+3: Rent Vehicle
+4: Return Vehicle
+5: Display Available Vehicles
+6: Show Rental History
+0: Exit
+
+3
+
+=== Available Vehicles ===
+| Type            | Plate        | Make         | Model        | Year   | Status             |
+|--------------------------------------------------------------------------------------------|
+| Car             | AAA111       | Toyota       | Corolla      | 2019   | Available          |
+| Minibus         | BBB222       | Honda        | Civic        | 2021   | Available          |
+| Pickup Truck    | CCC333       | Ford         | Focus        | 2024   | Available          |
+
+Enter license plate: aaa111
+Registered Customers:
+  Customer ID: 1 | Name: George
+  Customer ID: 2 | Name: Anne
+Enter customer ID: 1
+Enter rental amount: 100
+Vehicle rented to George
+
+1: Add Vehicle
+2: Add Customer
+3: Rent Vehicle
+4: Return Vehicle
+5: Display Available Vehicles
+6: Show Rental History
+0: Exit
+
+3
+
+=== Available Vehicles ===
+| Type            | Plate        | Make         | Model        | Year   | Status             |
+|--------------------------------------------------------------------------------------------|
+| Minibus         | BBB222       | Honda        | Civic        | 2021   | Available          |
+| Pickup Truck    | CCC333       | Ford         | Focus        | 2024   | Available          |
+
+Enter license plate: ccc333
+Registered Customers:
+  Customer ID: 1 | Name: George
+  Customer ID: 2 | Name: Anne
+Enter customer ID: 1
+Enter rental amount: 150
+Vehicle rented to George
+
+1: Add Vehicle
+2: Add Customer
+3: Rent Vehicle
+4: Return Vehicle
+5: Display Available Vehicles
+6: Show Rental History
+0: Exit
+
+3
+
+=== Available Vehicles ===
+| Type            | Plate        | Make         | Model        | Year   | Status             |
+|--------------------------------------------------------------------------------------------|
+| Minibus         | BBB222       | Honda        | Civic        | 2021   | Available          |
+
+Enter license plate: bbb222
+Registered Customers:
+  Customer ID: 1 | Name: George
+  Customer ID: 2 | Name: Anne
+Enter customer ID: 2
+Enter rental amount: 120.50
+Vehicle rented to Anne
+
+1: Add Vehicle
+2: Add Customer
+3: Rent Vehicle
+4: Return Vehicle
+5: Display Available Vehicles
+6: Show Rental History
+0: Exit
+
+3
+
+=== Available Vehicles ===
+| Type            | Plate        | Make         | Model        | Year   | Status             |
+|--------------------------------------------------------------------------------------------|
+  No vehicles with Status: Available
+
+Enter license plate: ccc333
+Registered Customers:
+  Customer ID: 1 | Name: George
+  Customer ID: 2 | Name: Anne
+Enter customer ID: 2
+Enter rental amount: 140
+Vehicle is not available for renting.
+
+1: Add Vehicle
+2: Add Customer
+3: Rent Vehicle
+4: Return Vehicle
+5: Display Available Vehicles
+6: Show Rental History
+0: Exit
+
