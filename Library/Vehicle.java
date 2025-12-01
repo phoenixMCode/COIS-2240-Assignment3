@@ -27,6 +27,13 @@ public abstract class Vehicle {
     	return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
     
+    private boolean isValidPlate(String plate) {
+    	if (plate == null||plate.length()>6) {
+    		return false;
+    	}
+    	return plate.matches("[A-Z]{3}[0-9]{3}");
+    }
+    
     public Vehicle() {
         this(null, null, 0);
     }
