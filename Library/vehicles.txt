@@ -1,3 +1,6 @@
 Car,AAA111,Available,Toyota,Corolla,2019,5
 Minibus,BBB222,Available,Honda,Civic,2021,true
 PickupTruck,CCC333,Available,Ford,Focus,2024,60.0,false
+Minibus,FSWF,Available,45,213,21343,true
+Car,ABC123,Available,Audi,A5,2009,5
+Car,XYZ999,Available,Honda,Crv,2014,8
